@@ -1,0 +1,72 @@
+#/usr/bin/env sh
+
+# Already set in plugins/common-aliases
+# cp='cp -i'
+# mv='mv -i'
+alias mkdir='mkdir -p'
+alias rm='/usr/local/bin/safe-rm -i'
+alias del='trash'
+
+alias casperjs='PHANTOMJS_EXECUTABLE=/usr/local/Cellar/phantomjs198/1.9.8/bin/phantomjs casperjs'
+
+portscan='netstat -tulpn'
+
+alias sass-compress='sass -t compressed --'
+
+# Wget Mirror Scraping Offline
+alias wget-mirror='wget -mkEpnp'
+
+alias vi='vim -u $HOME/.virc'
+alias mvi='mvim -u $HOME/.virc'
+alias evim='vim -y'
+# alias vi=vim
+
+alias tmux='tmux -u'
+
+# Laravel & Homestead
+alias vm='homestead up && homestead ssh'
+alias vsh='homestead ssh'
+alias vup='homestead up'
+alias vdown='homestead down'
+
+alias pgsql-on='postgres -D /usr/local/var/postgres'
+
+alias phantomjs-webdriver='phantomjs --webdriver=4444'
+alias selenium-server='java -jar ~/Code/selenium-server-standalone-2.44.0.jar $1'
+
+# phpserver(){ /usr/local/bin/php -S 0.0.0.0:$2 -t $1}
+phpserver(){ /usr/local/bin/php -S 0.0.0.0:${2:-8080} -t ${1:-.} }
+
+alias hosts='sudo vim /etc/hosts'
+
+alias ls='ls --group-directories-first --color -p --time-style=long-iso'
+alias lsd='ls -l | grep "^d"'
+
+# IP Address
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en0"
+alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
+
+# Hide Desktop icon (useful for presenting)
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+alias art='php artisan --env=local'
+alias fuck='$(thefuck $(fc -ln -1))'
+
+alias ping8='ping 8.8.8.8'
+alias pingg='ping google.com'
+
+alias chmod-reset='find . -type d -exec chmod 755 {} \; ; find . -type f -exec chmod 644 {} \;'
+
+
+alias ppjson='python -m json.tool'
+
+# Goto Aliases
+alias goto-etc='cd /usr/local/etc'
+alias goto-cellar='cd /usr/local/Cellar'
+alias goto-nginx='cd /usr/local/etc/nginx'
+alias goto-php='cd /usr/local/etc/php/$(php --run "echo PHP_MAJOR_VERSION.\".\".PHP_MINOR_VERSION;")'
+
+source ~/.ssh/sshpass
+

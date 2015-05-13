@@ -1,0 +1,6 @@
+[ui]
+username=Mulia Arifandi Nasution <mul14.net@gmail.com>
+editor=vim
+
+[extensions]
+prompt = ~/hg-prompt/prompt.py

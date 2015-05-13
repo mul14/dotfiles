@@ -1,0 +1,38 @@
+[user]
+	name = Mulia Arifandi Nasution
+	email = mul14.net@gmail.com
+[alias]
+	br = branch
+	st = status
+	co = checkout
+	cm = commit -m
+	log1 = log --oneline
+    assume = update-index --assume-unchanged --
+    noassume = update-index --no-assume-unchanged --
+    unstage = reset HEAD --
+    worddiff = !git diff --color | diff-highlight | less -r
+[core]
+	editor = /usr/local/bin/vim
+	autocrlf = input
+    # excludesfile = /Users/mul14/.gitignore_global
+    pager = diff-highlight | less -r
+[filter "media"]
+	required = true
+	clean = git media clean %f
+    smudge = git media smudge %f
+[diff]
+    ; external = git-wdiff
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[push]
+	default = simple
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+[credential]
+	helper = cache --timeout=7200

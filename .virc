@@ -1,0 +1,30 @@
+" Note: Skip initialization for vim-tiny or vim-small.
+if !1 | finish | endif
+
+if has('vim_starting')
+  set nocompatible               " Be iMproved
+endif
+
+filetype plugin indent on
+
+"so $HOME/.vim/bundle/xoria256.vim/colors/xoria256.vim
+
+set backspace=indent,eol,start
+
+colorscheme industry
+" set mouse=a
+syntax on
+set backspace=2
+set tabstop=4 shiftwidth=4 expandtab
+" set nu rnu
+set hidden " Move buffer without save current buffer
+
+set guifont=Inconsolata\ for\ Powerline:h15
+let g:Powerline_symbols = 'fancy'
+set encoding=utf-8
+set t_Co=256
+set fillchars+=stl:\ ,stlnc:\
+set term=xterm-256color
+set termencoding=utf-8
+set nowrap
+map <S-Tab> >gv
