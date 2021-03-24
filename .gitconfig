@@ -1,10 +1,9 @@
 [user]
-    name = Mulia Arifandi Nasution
-    email = mul14.net@gmail.com
+    name = Mulia Arifandy Nasution
+    email = mul14@users.noreply.github.com
     signingkey = 9D307CB69C566C62
-    
-    [gpg]
-        program = gpg
+[gpg]
+    program = gpg
 [alias]
     br = branch
     st = status
@@ -14,6 +13,9 @@
     
     unstage = reset HEAD --
     undo = reset --soft HEAD~1
+    
+    lastchanges = log -p HEAD^..HEAD
+    conflicts="!git --no-pager diff --name-only --diff-filter=U"
 
     worddiff = !git diff --color | diff-highlight | less -r
 
