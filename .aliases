@@ -1,27 +1,48 @@
 #/usr/bin/env sh
 
+# Prevent `cd` going to $HOME
+cd() {
+  [[ $# -eq 0 ]] && return
+  builtin cd "$@"
+}
+
 # Already set in plugins/common-aliases
-# cp='cp -i'
-# mv='mv -i'
-alias mkdir='mkdir -p'
-alias rm='/usr/local/bin/safe-rm -i'
-alias del='trash'
+# cp = 'cp -i'
+# mv = 'mv -i'
+alias mkdir = 'mkdir -p'
+alias rm = '/usr/local/bin/safe-rm -i'
+alias del = 'trash'
 
 alias casperjs='PHANTOMJS_EXECUTABLE=/usr/local/Cellar/phantomjs198/1.9.8/bin/phantomjs casperjs'
 
-portscan='netstat -tulpn'
+portscan = 'netstat -tulpn'
 
 alias sass-compress='sass -t compressed --'
 
 # Wget Mirror Scraping Offline
-alias wget-mirror='wget -mkEpnp'
+alias wget-mirror = 'wget -mkEpnp'
 
-alias vi='vim -u $HOME/.virc'
-alias mvi='mvim -u $HOME/.virc'
-alias evim='vim -y'
-# alias vi=vim
+# Edit ~/.zshrc
+alias {zz,zzz} = vim ~/.zshrc
 
-alias tmux='tmux -u'
+# Vim
+alias {v,vv,vvv} = vim
+alias vi = 'vim -u $HOME/.virc'
+alias mvi = 'mvim -u $HOME/.virc'
+alias evim = 'vim -y'
+# alias vi = vim
+
+# tmux & byobu
+alias tmux = 'tmux -u'
+alias byo = 'byobu'
+
+# JetBrains
+alias pst = 'pstorm'
+alias wst = 'webstorm'
+
+# Docker
+alias docker-stop-all = 'docker stop $(docker ps -a -q)'
+alias docker-rm-all = 'docker rm $(docker ps -a -q)'
 
 # Laravel & Homestead
 alias vm='homestead up && homestead ssh'
@@ -69,4 +90,3 @@ alias goto-nginx='cd /usr/local/etc/nginx'
 alias goto-php='cd /usr/local/etc/php/$(php --run "echo PHP_MAJOR_VERSION.\".\".PHP_MINOR_VERSION;")'
 
 source ~/.ssh/sshpass
-
