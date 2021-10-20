@@ -1,101 +1,178 @@
 #/usr/bin/env sh
 
+# -------------------------------------------------------------------------
 # Prevent `cd` going to $HOME
+# -------------------------------------------------------------------------
+
 cd() {
   [[ $# -eq 0 ]] && return
   builtin cd "$@"
 }
 
+
+# -------------------------------------------------------------------------
+# Common aliases
+# -------------------------------------------------------------------------
+
 # Already set in plugins/common-aliases
 # cp = 'cp -i'
 # mv = 'mv -i'
+
 alias mkdir = 'mkdir -p'
 alias rm = '/usr/local/bin/safe-rm -i'
 alias del = 'trash'
+alias hosts='sudo vim /etc/hosts'
+alias ls='ls --group-directories-first --color -p --time-style=long-iso'
+alias lsd='ls -l | grep "^d"'
+alias chmod-reset='find . -type d -exec chmod 755 {} \; ; find . -type f -exec chmod 644 {} \;'
+alias fuck='$(thefuck $(fc -ln -1))'
+alias ppjson='python -m json.tool'
 
-alias casperjs='PHANTOMJS_EXECUTABLE=/usr/local/Cellar/phantomjs198/1.9.8/bin/phantomjs casperjs'
 
-portscan = 'netstat -tulpn'
+# -------------------------------------------------------------------------
+# Network
+# -------------------------------------------------------------------------
 
-alias sass-compress='sass -t compressed --'
+alias ping1='ping 1.1.1.1'
+alias ping8='ping 8.8.8.8'
+alias pingg='ping google.com'
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en0"
+alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
+alias portscan = 'netstat -tulpn'
 
-# Wget Mirror Scraping Offline
+# Wget: Mirror Scraping Offline
 alias wget-mirror = 'wget -mkEpnp'
 
+
+# -------------------------------------------------------------------------
 # Edit ~/.zshrc
+# -------------------------------------------------------------------------
+
 alias {zz,zzz} = vim ~/.zshrc
 
+
+# -------------------------------------------------------------------------
 # Git
+# -------------------------------------------------------------------------
+
 unalias gcm
 function gcm() {
   git commit --message "$@"
 }
+
+# Prevent to run GhostScript
+alias gs=
+
 alias glo1="git --no-pager log --oneline -n1"
 alias glo5="git --no-pager log --oneline -n5"
 alias glo10="git --no-pager log --oneline -n10"
+alias glow="git log --format=\"%C(dim) ##  %C(reset)%C(yellow)%H %Cgreen(%h)%C(cyan bold)%d  %n%C(dim) 💁  %C(reset)%Cblue%aN %Cgreen%C(dim)(%aE) %n%Creset%C(dim) 🕔  %C(reset)%Cblue%aD %Cgreen(%ar) %n%Creset%C(dim) 📝  %C(reset)%s %n%n\""
 
-# Vim
-alias {v,vv,vvv} = vim
-alias vi = 'vim -u $HOME/.virc'
+
+# -------------------------------------------------------------------------
+# Vim & NeoVim
+# -------------------------------------------------------------------------
+
+alias {v,vv,vvv} = $(command -v nvim || command -v vim)
+alias vi = '$(command -v nvim || command -v vim) -u $HOME/.virc'
+alias evim = '$(command -v nvim || command -v vim) -y'
 alias mvi = 'mvim -u $HOME/.virc'
-alias evim = 'vim -y'
-# alias vi = vim
 
+
+# -------------------------------------------------------------------------
 # tmux & byobu
+# -------------------------------------------------------------------------
+
 alias tmux = 'tmux -u'
 alias byo = 'byobu'
 
-# JetBrains
+
+# -------------------------------------------------------------------------
+# JetBrains IDE
+# -------------------------------------------------------------------------
+
 alias pst = 'pstorm'
 alias wst = 'webstorm'
 
+
+# -------------------------------------------------------------------------
 # Docker
+# -------------------------------------------------------------------------
+
 alias docker-stop-all = 'docker stop $(docker ps -a -q)'
 alias docker-rm-all = 'docker rm $(docker ps -a -q)'
 
+
+# -------------------------------------------------------------------------
 # Laravel & Homestead
+# -------------------------------------------------------------------------
+
+alias art='php artisan --env=local'
 alias vm='homestead up && homestead ssh'
 alias vsh='homestead ssh'
 alias vup='homestead up'
 alias vdown='homestead down'
 
-alias pgsql-on='postgres -D /usr/local/var/postgres'
 
-alias phantomjs-webdriver='phantomjs --webdriver=4444'
-alias selenium-server='java -jar ~/Code/selenium-server-standalone-2.44.0.jar $1'
+# -------------------------------------------------------------------------
+# PHP
+# -------------------------------------------------------------------------
 
 # phpserver(){ /usr/local/bin/php -S 0.0.0.0:$2 -t $1}
 phpserver(){ /usr/local/bin/php -S 0.0.0.0:${2:-8080} -t ${1:-.} }
 
-alias hosts='sudo vim /etc/hosts'
 
-alias ls='ls --group-directories-first --color -p --time-style=long-iso'
-alias lsd='ls -l | grep "^d"'
+# -------------------------------------------------------------------------
+# MySQL / PostgreSQL / SQLite
+# -------------------------------------------------------------------------
 
-# IP Address
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en0"
-alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
+alias pgsql-on='postgres -D /usr/local/var/postgres'
 
-# Hide Desktop icon (useful for presenting)
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-
-alias art='php artisan --env=local'
-alias fuck='$(thefuck $(fc -ln -1))'
-
-alias ping8='ping 8.8.8.8'
-alias pingg='ping google.com'
-
-alias chmod-reset='find . -type d -exec chmod 755 {} \; ; find . -type f -exec chmod 644 {} \;'
-
-
-alias ppjson='python -m json.tool'
 
 # Goto Aliases
 alias goto-etc='cd /usr/local/etc'
 alias goto-cellar='cd /usr/local/Cellar'
 alias goto-nginx='cd /usr/local/etc/nginx'
 alias goto-php='cd /usr/local/etc/php/$(php --run "echo PHP_MAJOR_VERSION.\".\".PHP_MINOR_VERSION;")'
+
+
+# -------------------------------------------------------------------------
+# Linux
+# -------------------------------------------------------------------------
+
+if [ -n "$(uname -a | grep -i ubuntu)" ]; then
+  plugins+=(fasd)
+  alias fd=fdfind
+  alias agi='sudo apt install'
+  alias agu='sudo -- sh -c "apt update && apt upgrade"'
+  alias ags='apt show'
+fi
+
+if [ -n "$(uname -a | grep -i fedora)" ]; then
+  plugins+=(zoxide)
+  alias agi='sudo dnf install'
+  alias agu='sudo dnf upgrade'
+fi
+
+if [ -n "$(uname -a | grep -i archlinux)"  ] || [ -n "$(uname -a | grep -i manjaro)" ]; then
+  plugins+=(fasd)
+  alias agi='sudo pacman -S'
+  alias agu='sudo pacman -Syu'
+fi
+
+
+# -------------------------------------------------------------------------
+# macOS
+# -------------------------------------------------------------------------
+
+if [ -n "$(uname | grep -i darwin)" ]; then
+
+  # Hide Desktop icon (useful for presenting)
+  alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+  alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+fi
+
 
 source ~/.ssh/sshpass
