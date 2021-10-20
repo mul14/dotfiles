@@ -28,7 +28,7 @@
               --since='9am yesterday' \
               --format=%s
 [core]
-    editor = /usr/local/bin/vim
+    editor = $(command -v nvim || command -v vim || command -v vi || command -v nano)
     autocrlf = input
     # excludesfile = /Users/mul14/.gitignore_global
     pager = diff-highlight | less -r
