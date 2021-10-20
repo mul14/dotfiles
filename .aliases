@@ -25,6 +25,15 @@ alias wget-mirror = 'wget -mkEpnp'
 # Edit ~/.zshrc
 alias {zz,zzz} = vim ~/.zshrc
 
+# Git
+unalias gcm
+function gcm() {
+  git commit --message "$@"
+}
+alias glo1="git --no-pager log --oneline -n1"
+alias glo5="git --no-pager log --oneline -n5"
+alias glo10="git --no-pager log --oneline -n10"
+
 # Vim
 alias {v,vv,vvv} = vim
 alias vi = 'vim -u $HOME/.virc'
